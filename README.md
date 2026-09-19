@@ -58,7 +58,82 @@ All platform records are imported directly from the official hackathon dataset (
 
 ---
 
-## 4. Manager SkillHeatmap Integration
+## 4. Repository & Directory Structure
+
+```
+skill-sync/
+├── backend/
+│   ├── alembic/                      # Database migration scripts & history
+│   ├── app/
+│   │   ├── core/                     # Database engine, config, security & JWT
+│   │   │   ├── config.py
+│   │   │   ├── database.py
+│   │   │   ├── engines.py
+│   │   │   └── security.py
+│   │   ├── models/                   # SQLAlchemy ORM models (User, Skill, Training, etc.)
+│   │   ├── routers/                  # Modular FastAPI endpoints
+│   │   │   ├── auth.py               # Authentication & token endpoints
+│   │   │   ├── courses.py            # Course catalog
+│   │   │   ├── dashboard.py          # Role-specific analytics (Employee, Manager, SME, Admin)
+│   │   │   ├── employee_skills.py    # Skill profiles & validation aliases
+│   │   │   ├── notifications.py      # Real-time event notifications
+│   │   │   ├── projects.py           # Project requirements & readiness
+│   │   │   ├── reports.py            # Team, Training, and Enterprise PDF reports
+│   │   │   ├── skill_gaps.py         # Benchmark gap analysis
+│   │   │   ├── skills.py             # Master skills taxonomy
+│   │   │   ├── sme_access.py         # SME capability application & approval lifecycle
+│   │   │   ├── targets.py            # Target skill benchmarks
+│   │   │   ├── training.py           # SME mentoring request lifecycle
+│   │   │   ├── users.py              # User provisioning, team & departments
+│   │   │   └── validation.py         # Manager skill approval workflows
+│   │   ├── schemas/                  # Pydantic request & response validation schemas
+│   │   ├── services/                 # Business logic, pairing algorithms & PDF generation
+│   │   │   ├── dashboard_service.py
+│   │   │   ├── matching_service.py
+│   │   │   ├── notification_service.py
+│   │   │   ├── project_readiness_service.py
+│   │   │   ├── recommendation_service.py
+│   │   │   ├── report_service.py
+│   │   │   └── skill_gap_service.py
+│   │   ├── data_importer.py          # Excel dataset ingestion engine
+│   │   ├── main.py                   # FastAPI application initialization & CORS
+│   │   └── seed.py                   # Demo credentials & initial state seeder
+│   ├── data/                         # Official hackathon datasets (.xlsx)
+│   ├── tests/                        # Automated Pytest test suite (16 tests against PostgreSQL)
+│   ├── Dockerfile
+│   ├── pytest.ini
+│   └── requirements.txt
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── charts/               # Recharts & resilient SkillHeatmap
+│   │   │   ├── common/               # Modal, StatCard, Button, Badge, ProgressBar, Table
+│   │   │   └── layout/               # Navbar, Sidebar, and App Layout
+│   │   ├── context/                  # AuthContext (JWT state & RBAC routing guards)
+│   │   ├── pages/
+│   │   │   ├── admin/                # User, Skill, Course & Enterprise Report views
+│   │   │   ├── auth/                 # Login with one-click demo persona buttons
+│   │   │   ├── employee/             # Dashboard, Gaps, Roadmap, Profile, SME Request
+│   │   │   ├── manager/              # Heatmap, Validations, SME Approvals, Projects
+│   │   │   ├── shared/               # Notifications & 404
+│   │   │   └── sme/                  # Dedicated SME & Mentorship Hub
+│   │   ├── services/                 # Axios API service client modules
+│   │   ├── utils/                    # Math, formatters, and constants
+│   │   ├── App.jsx                   # Role-based route definitions
+│   │   └── main.jsx
+│   ├── index.html
+│   ├── package.json
+│   ├── tailwind.config.js
+│   └── vite.config.js
+├── .env.example                      # Root environment configuration template
+├── docker-compose.yml                # Containerized orchestration
+├── BUILD_STATUS.md                   # Verification & audit report
+└── README.md                         # Project documentation
+```
+
+---
+
+## 5. Manager SkillHeatmap Integration
 
 The Manager Dashboard preserves the resilient `SkillHeatmap.jsx` component:
 - Dynamically resolves `current_level`, `validated_level`, and `proficiency_level`.
@@ -68,7 +143,7 @@ The Manager Dashboard preserves the resilient `SkillHeatmap.jsx` component:
 
 ---
 
-## 5. Demo Credentials
+## 6. Demo Credentials
 
 All accounts are provisioned with real hashed passwords (`password123`). The login interface includes a one-click demo persona selector:
 
@@ -81,7 +156,7 @@ All accounts are provisioned with real hashed passwords (`password123`). The log
 
 ---
 
-## 6. Setup & Execution Instructions
+## 7. Setup & Execution Instructions
 
 ### Prerequisites
 - Python 3.10+
@@ -138,7 +213,7 @@ npm run build
 
 ---
 
-## 7. Environment Variables Configuration
+## 8. Environment Variables Configuration
 
 In `backend/.env`:
 ```ini
